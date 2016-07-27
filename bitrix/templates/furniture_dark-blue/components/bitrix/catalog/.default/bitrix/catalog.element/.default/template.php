@@ -1,4 +1,30 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
+
+<?
+if (is_array($arResult['DISPLAY_PROPERTIES']) && count($arResult['DISPLAY_PROPERTIES']) > 0):
+	$cnt = 0;
+	foreach($arResult["DISPLAY_PROPERTIES"] as $pid=>$arProperty):
+		if ($pid != 'PRICE' && $pid != 'PRICECURRENCY'):
+			if ($cnt == 0):
+				$cnt++;?>
+		<div class="catalog-item-properties">			
+<?
+			endif;
+?>
+			<div>
+			      <b>	
+				  <?='('.$arProperty["NAME"].': '.$arProperty["DISPLAY_VALUE"].')'?>
+			      </b>
+<?
+		endif;
+	endforeach;	
+?>
+			</div>
+		 </div>
+<?
+endif;
+?>
+
 <div class="catalog-detail">
 	<div class="catalog-item">
 <?
@@ -51,22 +77,22 @@ if (is_array($arResult['DISPLAY_PROPERTIES']) && count($arResult['DISPLAY_PROPER
 				$cnt++;
 ?>
 		<div class="catalog-item-properties">
-			<div class="catalog-item-properties-title"><?=GetMessage("CATALOG_CHAR")?></div>
+			<div class="catalog-item-properties-title"><?//=GetMessage("CATALOG_CHAR")?></div>
 <?
 			endif;
 ?>
 
-			<div class="catalog-item-property">
-				<span><?=$arProperty["NAME"]?></span>
+			<div> <!--class="catalog-item-property">-->
+				<span><?//=$arProperty["NAME"]?></span>
 				<b><?
 			if(is_array($arProperty["DISPLAY_VALUE"])):
-				echo implode("&nbsp;/&nbsp;", $arProperty["DISPLAY_VALUE"]);
+				//echo implode("&nbsp;/&nbsp;", $arProperty["DISPLAY_VALUE"]);
 			elseif($pid=="MANUAL"):
 ?>
-					<a href="<?=$arProperty["VALUE"]?>"><?=GetMessage("CATALOG_DOWNLOAD")?></a>
+					<a href="<?//=$arProperty["VALUE"]?>"><?//=GetMessage("CATALOG_DOWNLOAD")?></a>
 <?
 			else:
-				echo $arProperty["DISPLAY_VALUE"];
+				//echo $arProperty["DISPLAY_VALUE"];
 			endif;
 				?></b>
 			</div>
