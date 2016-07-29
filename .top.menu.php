@@ -23,8 +23,8 @@ $aMenuLinks = Array(
 		"" 
 	),
 	Array(
-		"Услуги", 
-		"services/", 
+		"Вопрос-ответ", 
+		"questions/", 
 		Array(), 
 		Array(), 
 		"" 

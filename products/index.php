@@ -1,7 +1,7 @@
 <?
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Продукция");
-?><?var_dump($APPLICATION->ShowProperty("title"));?><?$APPLICATION->IncludeComponent("bitrix:catalog", ".default", array(
+?><?$APPLICATION->IncludeComponent("bitrix:catalog", ".default", array(
 	"IBLOCK_TYPE" => "products",
 	"IBLOCK_ID" => "2",
 	"BASKET_URL" => "",

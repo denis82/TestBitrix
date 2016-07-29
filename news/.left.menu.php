@@ -6,13 +6,6 @@ $aMenuLinks = Array(
 		Array(), 
 		Array(), 
 		"" 
-	),
-	Array(
-		"Интриги", 
-		"/news/intrigues.php", 
-		Array(), 
-		Array(), 
-		"" 
 	)
 );
 ?>

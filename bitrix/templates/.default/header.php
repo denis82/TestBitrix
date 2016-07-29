@@ -4,6 +4,7 @@ IncludeTemplateLangFile(__FILE__);
 <html>
 <head>
 <?$APPLICATION->ShowHead();?>
+
 <title><?$APPLICATION->ShowTitle()?></title>
 </head>
 
