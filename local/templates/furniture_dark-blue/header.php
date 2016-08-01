@@ -133,25 +133,29 @@ $APPLICATION->IncludeFile(
 				</div>
 				<div class="content-block">
 					<div class="content-block-inner">
-					<a id="inline" href="#data_callback">Заказать звонок</a>
-						<div style="display:none">
-							<div id="data_callback">
-						
+					<a   id="inline" href="#form_sm">Заказать звонок</a>
+				<div style="display: none">
+					<div id="form_sm">					
 <?
-								$APPLICATION->IncludeComponent(
-									"bitrix:main.feedback",
-									"callback",
-									Array(
-										"EMAIL_TO" => "dtelegin.spok@yandex.ru",
-										"EVENT_MESSAGE_ID" => array(),
-										"OK_TEXT" => "Спасибо, ваше сообщение принято.",
-										"REQUIRED_FIELDS" => array("NAME","EMAIL","MESSAGE"),
-										"USE_CAPTCHA" => "Y"
-									)
-								);
+$APPLICATION->IncludeComponent(
+	"picom:main.feedback",
+	"callback",
+	Array(
+		"AJAX_MODE" => "Y",
+		"AJAX_OPTION_SHADOW" => "N",
+		"AJAX_OPTION_JUMP" => "N",
+		"AJAX_OPTION_STYLE" => "Y",
+		"AJAX_OPTION_HISTORY" => "N",
+		"EMAIL_TO" => "dtelegin.spok@yandex.ru",
+		"EVENT_MESSAGE_ID" => array(),
+		"OK_TEXT" => "Спасибо, ваше сообщение принято.",
+		"REQUIRED_FIELDS" => array("NAME","EMAIL","PHONE","MESSAGE"),
+		"USE_CAPTCHA" => "N"
+	)
+);
 ?>
-							</div>
-						</div>
+					</div>
+				</div>
 					</div>
 				</div>
 				<div class="content-block">
