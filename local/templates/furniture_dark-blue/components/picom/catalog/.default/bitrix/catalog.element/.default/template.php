@@ -13,7 +13,7 @@ if (is_array($arResult['DISPLAY_PROPERTIES']) && count($arResult['DISPLAY_PROPER
 ?>
 			<div>
 			      <b>	
-				  <?='('.$arProperty["NAME"].': '.$arProperty["DISPLAY_VALUE"].')'?>
+				  <?//='('.$arProperty["NAME"].': '.$arProperty["DISPLAY_VALUE"].')'?>
 			      </b>
 <?
 		endif;
@@ -119,3 +119,25 @@ endif;
 ?>
 	</div>
 </div>
+<!--
+        <a   id="order_inline" href="#form_or">Онлайн-заказ</a>
+        <div style="display: none">
+            <div id="form_or">	
+<?/*$APPLICATION->IncludeComponent(
+	"picom:main.feedback",
+	"order",
+	Array(
+                "AJAX_MODE" => "Y",
+		"AJAX_OPTION_SHADOW" => "N",
+		"AJAX_OPTION_JUMP" => "N",
+		"AJAX_OPTION_STYLE" => "Y",
+		"AJAX_OPTION_HISTORY" => "N",
+		"EMAIL_TO" => "dtelegin.spok@yandex.ru",
+		"EVENT_MESSAGE_ID" => array(),
+		"OK_TEXT" => "Спасибо, ваше сообщение принято.",
+		"REQUIRED_FIELDS" => array("PHONE","MESSAGE"),
+		"USE_CAPTCHA" => "N"
+	)
+);*/?>
+            </div>
+        </div>     

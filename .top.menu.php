@@ -1,4 +1,3 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?
 $aMenuLinks = Array(
 	Array(
@@ -22,16 +21,31 @@ $aMenuLinks = Array(
 		Array(), 
 		"" 
 	),
+
 	Array(
-		"Вопрос-ответ", 
-		"questions/", 
+		"Контакты", 
+		"contacts/", 
+		Array(), 
+		Array(), 
+		"" 
+	),
+/*	Array(
+		"бренды", 
+		"/brands/", 
 		Array(), 
 		Array(), 
 		"" 
 	),
 	Array(
-		"Контакты", 
-		"contacts/", 
+		"Галерея", 
+		"/galery/", 
+		Array(), 
+		Array(), 
+		"" 
+	),*/
+	Array(
+		"Вопрос", 
+		"/novyy-razdel/", 
 		Array(), 
 		Array(), 
 		"" 

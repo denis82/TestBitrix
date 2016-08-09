@@ -152,16 +152,7 @@ else
 	else
 		$componentPage = "sections";
 
-	$arResult = array(
-		"FOLDER" => "",
-		"URL_TEMPLATES" => Array(
-			"section" => htmlspecialcharsbx($APPLICATION->GetCurPage())."?".$arVariableAliases["SECTION_ID"]."=#SECTION_ID#",
-			"element" => htmlspecialcharsbx($APPLICATION->GetCurPage())."?".$arVariableAliases["SECTION_ID"]."=#SECTION_ID#"."&".$arVariableAliases["ELEMENT_ID"]."=#ELEMENT_ID#",
-			"compare" => htmlspecialcharsbx($APPLICATION->GetCurPage())."?".$arVariableAliases["action"]."=COMPARE",
-		),
-		"VARIABLES" => $arVariables,
-		"ALIASES" => $arVariableAliases
-	);
+	
 }
 
 $this->IncludeComponentTemplate($componentPage);

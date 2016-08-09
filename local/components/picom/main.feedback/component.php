@@ -12,13 +12,11 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
  */
 
 $arResult["PARAMS_HASH"] = md5(serialize($arParams).$this->GetTemplateName());
+
 $arParams["USE_CAPTCHA"] = (($arParams["USE_CAPTCHA"] != "N" && !$USER->IsAuthorized()) ? "Y" : "N");
-
 $arParams["EVENT_NAME"] = trim($arParams["EVENT_NAME"]);
-
 if($arParams["EVENT_NAME"] == '')
 	$arParams["EVENT_NAME"] = "FEEDBACK_FORM";
-	
 $arParams["EMAIL_TO"] = trim($arParams["EMAIL_TO"]);
 if($arParams["EMAIL_TO"] == '')
 	$arParams["EMAIL_TO"] = COption::GetOptionString("main", "email_from");
@@ -34,19 +32,34 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] <> '' && (!isset($_P
 		if(empty($arParams["REQUIRED_FIELDS"]) || !in_array("NONE", $arParams["REQUIRED_FIELDS"]))
 		{
 			if((empty($arParams["REQUIRED_FIELDS"]) || in_array("NAME", $arParams["REQUIRED_FIELDS"])) && strlen($_POST["user_name"]) <= 1)
-				$arResult["ERROR_MESSAGE"][] = GetMessage("MF_REQ_NAME");
-			if((empty($arParams["REQUIRED_FIELDS"]) || in_array("PHONE", $arParams["REQUIRED_FIELDS"])) && strlen($_POST["user_phone"]) <= 1)
-				$arResult["ERROR_MESSAGE"][] = GetMessage("MF_REQ_PHONE");	
+				$arResult["ERROR_MESSAGE"][] = GetMessage("MF_REQ_NAME");		
 			if((empty($arParams["REQUIRED_FIELDS"]) || in_array("EMAIL", $arParams["REQUIRED_FIELDS"])) && strlen($_POST["user_email"]) <= 1)
 				$arResult["ERROR_MESSAGE"][] = GetMessage("MF_REQ_EMAIL");
 			if((empty($arParams["REQUIRED_FIELDS"]) || in_array("MESSAGE", $arParams["REQUIRED_FIELDS"])) && strlen($_POST["MESSAGE"]) <= 3)
 				$arResult["ERROR_MESSAGE"][] = GetMessage("MF_REQ_MESSAGE");
+			if(isset($_POST["user_phone"])) {	
+                            if((empty($arParams["REQUIRED_FIELDS"]) || in_array("PHONE", $arParams["REQUIRED_FIELDS"])) && strlen($_POST["user_phone"]) <= 1) {
+                                    $arResult["ERROR_MESSAGE"][] = GetMessage("MF_REQ_PHONE");
+                            }
+			}	
 		}
 		if(strlen($_POST["user_email"]) > 1 && !check_email($_POST["user_email"]))
 			$arResult["ERROR_MESSAGE"][] = GetMessage("MF_EMAIL_NOT_VALID");
-			
-		if(strlen($_POST["user_phone"]) > 1 && false === check_phone($_POST["user_phone"]))
-			$arResult["ERROR_MESSAGE"][] = GetMessage("MF_PHONE_NOT_VALID");
+		
+		
+		if(isset($_POST["user_phone"])) {
+		
+                    $pattern = '/^[0-9]+$/';
+                    if(0 == preg_match($pattern, $_POST["user_phone"])) {
+                             $phone = false;
+                    } else {
+                             $phone = true;
+                    }	
+                    if(strlen($_POST["user_phone"]) > 1 && false === $phone)
+                            $arResult["ERROR_MESSAGE"][] = GetMessage("MF_PHONE_NOT_VALID");
+		}
+		
+		
 		if($arParams["USE_CAPTCHA"] == "Y")
 		{
 			include_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/classes/general/captcha.php");
@@ -64,11 +77,37 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] <> '' && (!isset($_P
 
 		}			
 		if(empty($arResult["ERROR_MESSAGE"]))
-		{
+		{         
+                        if(true == isset($_POST["user_phone"]) and false == isset($_POST["user_email"])) {
+                            
+                            $el = new CIBlockElement;
+
+                            $PROP = array();
+                            $PROP[40] = $_POST['user_phone'];
+                            $PROP[41] = $_POST['MESSAGE'];  
+ 
+
+                            $arLoadProductArray = Array(
+                            "MODIFIED_BY"    => $USER->GetID(), // элемент изменен текущим пользователем
+                            "IBLOCK_SECTION_ID" => false,          // элемент лежит в корне раздела
+                            "IBLOCK_ID"      => 21,
+                            "PROPERTY_VALUES"=> $PROP,
+                            "NAME"           => date("Y-m-d-H"),
+                            "ACTIVE"         => "Y",            // активен
+                            "PREVIEW_TEXT"   => "текст для списка элементов",
+                            "DETAIL_TEXT"    => "текст для детального просмотра",
+                            //"DETAIL_PICTURE" => CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"]."/image.gif")
+                            );
+                            if($PRODUCT_ID = $el->Add($arLoadProductArray))
+                                echo "New ID: ".$PRODUCT_ID;
+                            else
+                                echo "Error: ".$el->LAST_ERROR;
+                            
+                            
+                        }
 			$arFields = Array(
 				"AUTHOR" => $_POST["user_name"],
 				"AUTHOR_EMAIL" => $_POST["user_email"],
-				"AUTHOR_PHONE" => $_POST["user_phone"],
 				"EMAIL_TO" => $arParams["EMAIL_TO"],
 				"TEXT" => $_POST["MESSAGE"],
 			);
@@ -81,14 +120,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] <> '' && (!isset($_P
 			else
 				CEvent::Send($arParams["EVENT_NAME"], SITE_ID, $arFields);
 			$_SESSION["MF_NAME"] = htmlspecialcharsbx($_POST["user_name"]);
-			$_SESSION["MF_PHONE"] = htmlspecialcharsbx($_POST["user_phone"]);
 			$_SESSION["MF_EMAIL"] = htmlspecialcharsbx($_POST["user_email"]);
 			LocalRedirect($APPLICATION->GetCurPageParam("success=".$arResult["PARAMS_HASH"], Array("success")));
 		}
 		
 		$arResult["MESSAGE"] = htmlspecialcharsbx($_POST["MESSAGE"]);
 		$arResult["AUTHOR_NAME"] = htmlspecialcharsbx($_POST["user_name"]);
-		$arResult["AUTHOR_PHONE"] = htmlspecialcharsbx($_POST["user_phone"]);
 		$arResult["AUTHOR_EMAIL"] = htmlspecialcharsbx($_POST["user_email"]);
 	}
 	else
@@ -118,13 +155,4 @@ if(empty($arResult["ERROR_MESSAGE"]))
 if($arParams["USE_CAPTCHA"] == "Y")
 	$arResult["capCode"] =  htmlspecialcharsbx($APPLICATION->CaptchaGetCode());
 
-function check_phone($phone) {
-		$pattern = '/^[0-9]+$/';//( +)?((\+?7|8) ?)?((\(\d{3}\))|(\d{3}))?( )?(\d{3}[\- ]?\d{2}[\- ]?\d{2})( +)?$/';
-		if(0 == preg_match($pattern, $phone)) {
-			return false;
-		} else {
-			return true;
-		}
-		
-}
 $this->IncludeComponentTemplate();

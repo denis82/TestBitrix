@@ -2,7 +2,24 @@
 
  
 <?  
-//var_dump ($arParams);
+global $arrFilter;
+
+
+if (CModule::IncludeModule("iblock")){
+ 
+	$iblock_id = 13;
+	# show url my elements
+	$my_elements = CIBlockElement::GetList (
+	  Array("ID" => "ASC"),
+	  Array("IBLOCK_ID" => $iblock_id),
+	  false,
+	  false,
+	  Array('ID',"NAME")
+	);
+ 
+	
+}
+
     if ($_GET["sort"] == "price")
     {
     
@@ -17,10 +34,26 @@
         $brend="asortvibor";
         $price="";
     }
+    if ($_GET["sort"] == "brand")
+    {
+        $arrFilter = array("PROPERTY_BRAND" => $_GET["ELEMENT"]);
+        $arParams["ELEMENT_SORT_FIELD"] = "name";
+        $brend="asortvibor";
+        $price="";
+    }
     echo '<span>Сортировать по: </span>
         <a href="'.$APPLICATION->GetCurPageParam("sort=price",array("sort"), false).'" class="'.$price.'">цене</a> |
-        <a href="'.$APPLICATION->GetCurPageParam("sort=name",array("sort"), false).'" class="'.$brend.'">названию</a>';
+        <a href="'.$APPLICATION->GetCurPageParam("sort=name",array("sort"), false).'" class="'.$brend.'">названию</a> |<br>';
+    //echo 'По бренду: <ul style="display: inline">'; 
+     while($ar_fields = $my_elements->GetNext())
+	{
+	//echo '<li style="display: inline; margin-right: 10px"><a href="'.SITE_DIR.'products/?sort=brand&ELEMENT='.$ar_fields['ID'].'">'.$ar_fields['NAME'].'</a></li>';
 
+	}
+    
+        
+
+       // echo '</ul>';
 ?>
 <?$APPLICATION->IncludeComponent(
 	"picom:catalog.section",
@@ -43,7 +76,7 @@
 		"ACTION_VARIABLE" => $arParams["ACTION_VARIABLE"],
 		"PRODUCT_ID_VARIABLE" => $arParams["PRODUCT_ID_VARIABLE"],
 		"SECTION_ID_VARIABLE" => $arParams["SECTION_ID_VARIABLE"],
-		"FILTER_NAME" => $arParams["FILTER_NAME"],
+		"FILTER_NAME" => "arrFilter",
 		"DISPLAY_PANEL" => $arParams["DISPLAY_PANEL"],
 		"CACHE_TYPE" => $arParams["CACHE_TYPE"],
 		"CACHE_TIME" => $arParams["CACHE_TIME"],

@@ -39,7 +39,25 @@
 		"DETAIL_SHOW_PICTURE" => $arParams['DETAIL_SHOW_PICTURE'],
 	),
 	$component
-);?>
+	
+	
+);
+
+$arSelect = Array();
+$arFilter = Array("IBLOCK_ID"=>20, "PROPERTY_PRODUCT"=>$arResult["VARIABLES"]["ELEMENT_ID"], "ACTIVE_DATE"=>"Y", "ACTIVE"=>"Y");
+$res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>50), $arSelect);
+$newHeight = 50;
+$newWidth = 50;
+while($ob = $res->GetNextElement())
+{
+ $arFields = $ob->GetFields();
+ $renderImage = CFile::ResizeImageGet($arFields['DETAIL_PICTURE'], Array("width" => $newWidth, "height" => $newHeight), BX_RESIZE_IMAGE_EXACT );
+ echo CFile::ShowImage($renderImage['src'], $newWidth, $newHeight, "border=0", "", true);
+}
+
+
+
+?>
 <?if($arParams["USE_REVIEW"]=="Y" && IsModuleInstalled("forum") && $ElementID):?>
 <br />
 <?$APPLICATION->IncludeComponent(

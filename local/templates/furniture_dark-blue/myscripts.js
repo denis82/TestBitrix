@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	//$("#form_sm").hide();
+    
 	$("#errors_callback").hide();
 	$("#inline").click( function(){
 		//$("#form_sm").show();
@@ -10,6 +10,12 @@ $(document).ready(function() {
     $(".posQuestion").hide();
 
     $("#inline").fancybox({
+		'hideOnContentClick': false
+	});
+    $("#inline_question").fancybox({
+		'hideOnContentClick': false
+	});
+    $("#order_inline").fancybox({
 		'hideOnContentClick': false
 	});
 	var res=0;

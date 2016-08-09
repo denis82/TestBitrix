@@ -131,11 +131,24 @@ $APPLICATION->IncludeFile(
 ?>
 					</div>
 				</div>
+				
 				<div class="content-block">
 					<div class="content-block-inner">
+						
+<?
+$APPLICATION->IncludeComponent("bitrix:search.form", "flat", Array(
+	"PAGE" => "#SITE_DIR#search/",
+),
+	false
+);
+?>
+					</div>
+				</div>
+                                <div class="content-block">
+                                    <div class="content-block-inner">
 					<a   id="inline" href="#form_sm">Заказать звонок</a>
-				<div style="display: none">
-					<div id="form_sm">					
+                                        <div style="display: none">
+                                            <div id="form_sm">					
 <?
 $APPLICATION->IncludeComponent(
 	"picom:main.feedback",
@@ -146,7 +159,7 @@ $APPLICATION->IncludeComponent(
 		"AJAX_OPTION_JUMP" => "N",
 		"AJAX_OPTION_STYLE" => "Y",
 		"AJAX_OPTION_HISTORY" => "N",
-		"EMAIL_TO" => "dtelegin.spok@yandex.ru",
+		"EMAIL_TO" => "xtcnth7@yandex.ru",
 		"EVENT_MESSAGE_ID" => array(),
 		"OK_TEXT" => "Спасибо, ваше сообщение принято.",
 		"REQUIRED_FIELDS" => array("NAME","EMAIL","PHONE","MESSAGE"),
@@ -154,23 +167,11 @@ $APPLICATION->IncludeComponent(
 	)
 );
 ?>
-					</div>
-				</div>
-					</div>
-				</div>
-				<div class="content-block">
-					<div class="content-block-inner">
-						
-<?
-						$APPLICATION->IncludeComponent("bitrix:search.form", "flat", Array(
-							"PAGE" => "#SITE_DIR#search/",
-						),
-							false
-						);
-?>
-					</div>
-				</div>
-
+                                            </div>
+                                        </div>     
+                                    </div>
+                                </div>
+				
 				<div class="information-block">
 					<div class="top"></div>
 					<div class="information-block-inner">

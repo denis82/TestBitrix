@@ -5,11 +5,15 @@
 <?endif;?>
 
 <?
+ 
+    
 foreach($arResult["ITEMS"] as $cell=>$arElement):
+	
 	$width = 0;
 	$this->AddEditAction($arElement['ID'], $arElement['EDIT_LINK'], CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_EDIT"));
 	$this->AddDeleteAction($arElement['ID'], $arElement['DELETE_LINK'], CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_DELETE"), array("CONFIRM" => GetMessage('CATALOG_ELEMENT_DELETE_CONFIRM')));
 ?>
+
 <div class="catalog-item" id="<?=$this->GetEditAreaId($arElement['ID']);?>">
 <?
 	if(is_array($arElement["PREVIEW_PICTURE"])):
@@ -28,16 +32,29 @@ foreach($arResult["ITEMS"] as $cell=>$arElement):
 <?
 	endif;
 ?>
+
 	<div class="catalog-item-title"><a href="<?=$arElement["DETAIL_PAGE_URL"]?>"><?=$arElement["NAME"]?></a></div>
+	
+	
 <?
 	foreach($arElement["DISPLAY_PROPERTIES"] as $pid=>$arProperty):
-		if ($pid != 'PRICECURRENCY'):
+	//var_dump($arElement["DISPLAY_PROPERTIES"]);
+	if ($pid != 'PRICECURRENCY'):
+?><?/*
+	
+	$id_element=$arProperty ["VALUE"];
+	$newWidth = 50; 
+	$newHeight =50;
+	$renderImage = CFile::ResizeImageGet($arProperty ["LINK_ELEMENT_VALUE"][$id_element]["DETAIL_PICTURE"], Array("width" => $newWidth, "height" => $newHeight), BX_RESIZE_IMAGE_EXACT );
+	echo CFile::ShowImage($renderImage['src'], $newWidth, $newHeight, "border=0", "", true);*/
 ?>
-		<?=$arProperty["NAME"]?>:&nbsp;<?
+		<?//=$arProperty["NAME"]?><!--:&nbsp;--><?
 			if(is_array($arProperty["DISPLAY_VALUE"]))
 				echo implode("&nbsp;/&nbsp;", $arProperty["DISPLAY_VALUE"]);
-			else
-				echo $arProperty["DISPLAY_VALUE"];?><br />
+			else		
+				//echo $arProperty["DISPLAY_VALUE"];
+				//echo '<a href ="'.SITE_DIR.'brands/?ELEMENT_ID='.$id_element.'">'.$arProperty ["LINK_ELEMENT_VALUE"][$id_element]["NAME"].'</a>';
+				?><br />
 <?
 		endif;
 	endforeach;

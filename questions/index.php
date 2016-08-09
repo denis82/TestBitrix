@@ -2,10 +2,8 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Вопрос-ответ");
 $post = $_POST;
-?><?if($_GET["ELEMENT_ID"] == null):?>
-    <a id="inline" href="#data">Задать вопрос</a>
-<?endif?>
-<?
+?><?if($_GET["ELEMENT_ID"] == null):?> <a id="inline_question" href="#data">Задать вопрос</a>
+<?endif?> <?
 $el = new CIBlockElement;
 
 if('' != $_POST['user_name'] && '' != $_POST['MESSAGE']) {
@@ -32,7 +30,7 @@ if('' != $_POST['user_name'] && '' != $_POST['MESSAGE']) {
 <div style="display:none">
 	<div id="data">
 		 <?$APPLICATION->IncludeComponent(
-	"bitrix:main.feedback",
+	"picom:main.feedback",
 	"feedback",
 	Array(
 		"EMAIL_TO" => "dtelegin.spok@yandex.ru",
@@ -44,9 +42,9 @@ if('' != $_POST['user_name'] && '' != $_POST['MESSAGE']) {
 );?>
 	</div>
 </div>
-<?$APPLICATION->IncludeComponent(
-	"bitrix:news",
-	"",
+ <?$APPLICATION->IncludeComponent(
+	"picom:news",
+	"question_answer",
 	Array(
 		"ADD_ELEMENT_CHAIN" => "N",
 		"ADD_SECTIONS_CHAIN" => "Y",
@@ -64,14 +62,17 @@ if('' != $_POST['user_name'] && '' != $_POST['MESSAGE']) {
 		"DETAIL_ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"DETAIL_DISPLAY_BOTTOM_PAGER" => "Y",
 		"DETAIL_DISPLAY_TOP_PAGER" => "N",
-		"DETAIL_FIELD_CODE" => array("name"),
+		"DETAIL_FIELD_CODE" => array("","name",""),
 		"DETAIL_PAGER_SHOW_ALL" => "Y",
 		"DETAIL_PAGER_TEMPLATE" => "",
 		"DETAIL_PAGER_TITLE" => "Страница",
-		"DETAIL_PROPERTY_CODE" => array("question","name",""),
+		"DETAIL_PROPERTY_CODE" => array("QUESTION","NAME","RESPONSE","question","name",""),
 		"DETAIL_SET_CANONICAL_URL" => "N",
 		"DISPLAY_BOTTOM_PAGER" => "Y",
+		"DISPLAY_DATE" => "Y",
 		"DISPLAY_NAME" => "Y",
+		"DISPLAY_PICTURE" => "Y",
+		"DISPLAY_PREVIEW_TEXT" => "Y",
 		"DISPLAY_TOP_PAGER" => "N",
 		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
 		"IBLOCK_ID" => "12",
@@ -79,7 +80,7 @@ if('' != $_POST['user_name'] && '' != $_POST['MESSAGE']) {
 		"INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
 		"LIST_ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"LIST_FIELD_CODE" => array("",""),
-		"LIST_PROPERTY_CODE" => array("question","name",""),
+		"LIST_PROPERTY_CODE" => array("QUESTION","NAME","RESPONSE","question","name",""),
 		"MESSAGE_404" => "",
 		"META_DESCRIPTION" => "-",
 		"META_KEYWORDS" => "-",
@@ -107,13 +108,11 @@ if('' != $_POST['user_name'] && '' != $_POST['MESSAGE']) {
 		"USE_RATING" => "N",
 		"USE_RSS" => "N",
 		"USE_SEARCH" => "N",
+		"USE_SHARE" => "N",
 		"VARIABLE_ALIASES" => Array("ELEMENT_ID"=>"ELEMENT_ID","SECTION_ID"=>"SECTION_ID")
 	)
-);?>
-<?if($_GET["ELEMENT_ID"] != null):?>
-    <a id="inline_resp" href="#data_resp">Ответить на вопрос</a>
+);?> <?if($_GET["ELEMENT_ID"] != null):?> <a id="inline_resp" href="#data_resp">Ответить на вопрос</a>
 <?endif?>
-
 <div style="display:none">
 	<div id="data_resp">
 		 <?$APPLICATION->IncludeComponent(
@@ -129,7 +128,6 @@ if('' != $_POST['user_name'] && '' != $_POST['MESSAGE']) {
 );?>
 	</div>
 </div>
-
 <?
 $ell = new CIBlockElement;
 
@@ -151,5 +149,4 @@ if('' != $_POST['response']) {
     $PRODUCT_ID = (int)$_GET["ELEMENT_ID"];  
     $res = $ell->Update($PRODUCT_ID, $arLoadProductArray);
 }  
-?>
-<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

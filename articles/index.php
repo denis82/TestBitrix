@@ -3,8 +3,8 @@ require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetPageProperty("title", "статьи");
 $APPLICATION->SetTitle("Статьи");
 ?><?$APPLICATION->IncludeComponent(
-	"bitrix:catalog", 
-	".default", 
+	"picom:catalog", 
+	"articles", 
 	array(
 		"ACTION_VARIABLE" => "action",
 		"ADD_ELEMENT_CHAIN" => "N",
