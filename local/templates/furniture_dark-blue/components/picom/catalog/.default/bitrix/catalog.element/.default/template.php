@@ -119,11 +119,11 @@ endif;
 ?>
 	</div>
 </div>
-<!--
+
         <a   id="order_inline" href="#form_or">Онлайн-заказ</a>
         <div style="display: none">
             <div id="form_or">	
-<?/*$APPLICATION->IncludeComponent(
+<?$APPLICATION->IncludeComponent(
 	"picom:main.feedback",
 	"order",
 	Array(
@@ -138,6 +138,6 @@ endif;
 		"REQUIRED_FIELDS" => array("PHONE","MESSAGE"),
 		"USE_CAPTCHA" => "N"
 	)
-);*/?>
+);?>
             </div>
         </div>     
