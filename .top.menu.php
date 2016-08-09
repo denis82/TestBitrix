@@ -36,13 +36,13 @@ $aMenuLinks = Array(
 		Array(), 
 		"" 
 	),
-/*	Array(
+	Array(
 		"Галерея", 
 		"/galery/", 
 		Array(), 
 		Array(), 
 		"" 
-	),*/
+	),
 	Array(
 		"Вопрос", 
 		"/novyy-razdel/", 
