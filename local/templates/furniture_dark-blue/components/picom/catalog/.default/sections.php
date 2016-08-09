@@ -44,16 +44,16 @@ if (CModule::IncludeModule("iblock")){
     echo '<span>Сортировать по: </span>
         <a href="'.$APPLICATION->GetCurPageParam("sort=price",array("sort"), false).'" class="'.$price.'">цене</a> |
         <a href="'.$APPLICATION->GetCurPageParam("sort=name",array("sort"), false).'" class="'.$brend.'">названию</a> |<br>';
-    //echo 'По бренду: <ul style="display: inline">'; 
+    echo 'По бренду: <ul style="display: inline">'; 
      while($ar_fields = $my_elements->GetNext())
 	{
-	//echo '<li style="display: inline; margin-right: 10px"><a href="'.SITE_DIR.'products/?sort=brand&ELEMENT='.$ar_fields['ID'].'">'.$ar_fields['NAME'].'</a></li>';
+	echo '<li style="display: inline; margin-right: 10px"><a href="'.SITE_DIR.'products/?sort=brand&ELEMENT='.$ar_fields['ID'].'">'.$ar_fields['NAME'].'</a></li>';
 
 	}
     
         
 
-       // echo '</ul>';
+        echo '</ul>';
 ?>
 <?$APPLICATION->IncludeComponent(
 	"picom:catalog.section",
