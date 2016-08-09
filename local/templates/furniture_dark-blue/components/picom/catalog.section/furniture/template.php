@@ -38,22 +38,22 @@ foreach($arResult["ITEMS"] as $cell=>$arElement):
 	
 <?
 	foreach($arElement["DISPLAY_PROPERTIES"] as $pid=>$arProperty):
-	//var_dump($arElement["DISPLAY_PROPERTIES"]);
+
 	if ($pid != 'PRICECURRENCY'):
-?><?/*
+?><?
 	
 	$id_element=$arProperty ["VALUE"];
 	$newWidth = 50; 
 	$newHeight =50;
 	$renderImage = CFile::ResizeImageGet($arProperty ["LINK_ELEMENT_VALUE"][$id_element]["DETAIL_PICTURE"], Array("width" => $newWidth, "height" => $newHeight), BX_RESIZE_IMAGE_EXACT );
-	echo CFile::ShowImage($renderImage['src'], $newWidth, $newHeight, "border=0", "", true);*/
+	echo CFile::ShowImage($renderImage['src'], $newWidth, $newHeight, "border=0", "", true);
 ?>
 		<?=$arProperty["NAME"]?>:&nbsp;<?
 			if(is_array($arProperty["DISPLAY_VALUE"]))
 				echo implode("&nbsp;/&nbsp;", $arProperty["DISPLAY_VALUE"]);
 			else		
-				echo $arProperty["DISPLAY_VALUE"];
-				echo '<a href ="'.SITE_DIR.'brands/?ELEMENT_ID='.$id_element.'">'.$arProperty ["LINK_ELEMENT_VALUE"][$id_element]["NAME"].'</a>';
+				//echo $arProperty["DISPLAY_VALUE"];
+				echo '<a href ="'.SITE_DIR.'brands/'.$id_element.'/">'.$arProperty ["LINK_ELEMENT_VALUE"][$id_element]["NAME"].'</a>';
 				?><br />
 <?
 		endif;
