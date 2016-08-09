@@ -13,7 +13,7 @@ if (is_array($arResult['DISPLAY_PROPERTIES']) && count($arResult['DISPLAY_PROPER
 ?>
 			<div>
 			      <b>	
-				  <?//='('.$arProperty["NAME"].': '.$arProperty["DISPLAY_VALUE"].')'?>
+				  <?='('.$arProperty["NAME"].': '.$arProperty["DISPLAY_VALUE"].')'?>
 			      </b>
 <?
 		endif;

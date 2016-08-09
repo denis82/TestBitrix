@@ -48,12 +48,12 @@ foreach($arResult["ITEMS"] as $cell=>$arElement):
 	$renderImage = CFile::ResizeImageGet($arProperty ["LINK_ELEMENT_VALUE"][$id_element]["DETAIL_PICTURE"], Array("width" => $newWidth, "height" => $newHeight), BX_RESIZE_IMAGE_EXACT );
 	echo CFile::ShowImage($renderImage['src'], $newWidth, $newHeight, "border=0", "", true);*/
 ?>
-		<?//=$arProperty["NAME"]?><!--:&nbsp;--><?
+		<?=$arProperty["NAME"]?>:&nbsp;<?
 			if(is_array($arProperty["DISPLAY_VALUE"]))
 				echo implode("&nbsp;/&nbsp;", $arProperty["DISPLAY_VALUE"]);
 			else		
-				//echo $arProperty["DISPLAY_VALUE"];
-				//echo '<a href ="'.SITE_DIR.'brands/?ELEMENT_ID='.$id_element.'">'.$arProperty ["LINK_ELEMENT_VALUE"][$id_element]["NAME"].'</a>';
+				echo $arProperty["DISPLAY_VALUE"];
+				echo '<a href ="'.SITE_DIR.'brands/?ELEMENT_ID='.$id_element.'">'.$arProperty ["LINK_ELEMENT_VALUE"][$id_element]["NAME"].'</a>';
 				?><br />
 <?
 		endif;

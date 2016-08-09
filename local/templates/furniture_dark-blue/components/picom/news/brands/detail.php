@@ -165,7 +165,7 @@ $this->setFrameMode(true);
 	$component
 );?>
 <?endif?>
-<?
+<?/*
 $arSelect = Array("NAME");
 $arFilter = Array("IBLOCK_ID"=>2, "PROPERTY_BRAND"=>$arResult["VARIABLES"]["ELEMENT_ID"], "ACTIVE_DATE"=>"Y", "ACTIVE"=>"Y");
 $res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>50), $arSelect);
@@ -176,5 +176,5 @@ while($ob = $res->GetNextElement())
  echo $arFields['NAME'];
  echo ' ';
 }
-
+*/
 ?>
