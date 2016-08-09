@@ -1,7 +1,7 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <?$ElementID=$APPLICATION->IncludeComponent(
-	"bitrix:catalog.element",
-	"",
+	"picom:catalog.element",
+	"board",
 	Array(
  		"IBLOCK_TYPE" => $arParams["IBLOCK_TYPE"],
  		"IBLOCK_ID" => $arParams["IBLOCK_ID"],
@@ -46,6 +46,7 @@
 $arSelect = Array();
 $arFilter = Array("IBLOCK_ID"=>20, "PROPERTY_PRODUCT"=>$arResult["VARIABLES"]["ELEMENT_ID"], "ACTIVE_DATE"=>"Y", "ACTIVE"=>"Y");
 $res = CIBlockElement::GetList(Array(), $arFilter, false, Array("nPageSize"=>50), $arSelect);
+//var_dump($res);
 $newHeight = 50;
 $newWidth = 50;
 while($ob = $res->GetNextElement())
