@@ -9,9 +9,9 @@ $post = $_POST;
 	
 <?endif?> 
  <?$APPLICATION->IncludeComponent(
-	"bitrix:news",
-	"question_answer",
-	Array(
+	"bitrix:news", 
+	"question_answer", 
+	array(
 		"ADD_ELEMENT_CHAIN" => "N",
 		"ADD_SECTIONS_CHAIN" => "Y",
 		"AJAX_MODE" => "N",
@@ -28,11 +28,22 @@ $post = $_POST;
 		"DETAIL_ACTIVE_DATE_FORMAT" => "d.m.Y",
 		"DETAIL_DISPLAY_BOTTOM_PAGER" => "Y",
 		"DETAIL_DISPLAY_TOP_PAGER" => "N",
-		"DETAIL_FIELD_CODE" => array("","name",""),
+		"DETAIL_FIELD_CODE" => array(
+			0 => "",
+			1 => "name",
+			2 => "",
+		),
 		"DETAIL_PAGER_SHOW_ALL" => "Y",
 		"DETAIL_PAGER_TEMPLATE" => "",
 		"DETAIL_PAGER_TITLE" => "Страница",
-		"DETAIL_PROPERTY_CODE" => array("QUESTION","NAME","RESPONSE","question","name",""),
+		"DETAIL_PROPERTY_CODE" => array(
+			0 => "QUESTION",
+			1 => "NAME",
+			2 => "RESPONSE",
+			3 => "question",
+			4 => "name",
+			5 => "",
+		),
 		"DETAIL_SET_CANONICAL_URL" => "N",
 		"DISPLAY_BOTTOM_PAGER" => "Y",
 		"DISPLAY_DATE" => "Y",
@@ -43,10 +54,20 @@ $post = $_POST;
 		"HIDE_LINK_WHEN_NO_DETAIL" => "N",
 		"IBLOCK_ID" => "12",
 		"IBLOCK_TYPE" => "question",
-		"INCLUDE_IBLOCK_INTO_CHAIN" => "Y",
+		"INCLUDE_IBLOCK_INTO_CHAIN" => "N",
 		"LIST_ACTIVE_DATE_FORMAT" => "d.m.Y",
-		"LIST_FIELD_CODE" => array("",""),
-		"LIST_PROPERTY_CODE" => array("QUESTION","NAME","RESPONSE","question","name",""),
+		"LIST_FIELD_CODE" => array(
+			0 => "",
+			1 => "",
+		),
+		"LIST_PROPERTY_CODE" => array(
+			0 => "QUESTION",
+			1 => "NAME",
+			2 => "RESPONSE",
+			3 => "question",
+			4 => "name",
+			5 => "",
+		),
 		"MESSAGE_404" => "",
 		"META_DESCRIPTION" => "-",
 		"META_KEYWORDS" => "-",
@@ -61,7 +82,6 @@ $post = $_POST;
 		"PREVIEW_TRUNCATE_LEN" => "",
 		"SEF_FOLDER" => "/questions/",
 		"SEF_MODE" => "Y",
-		"SEF_URL_TEMPLATES" => Array("detail"=>"#ELEMENT_ID#/","news"=>"","section"=>""),
 		"SET_LAST_MODIFIED" => "N",
 		"SET_STATUS_404" => "N",
 		"SET_TITLE" => "Y",
@@ -76,7 +96,14 @@ $post = $_POST;
 		"USE_RATING" => "N",
 		"USE_RSS" => "N",
 		"USE_SEARCH" => "N",
-		"USE_SHARE" => "N"
-	)
+		"USE_SHARE" => "N",
+		"COMPONENT_TEMPLATE" => "question_answer",
+		"SEF_URL_TEMPLATES" => array(
+			"news" => "",
+			"section" => "",
+			"detail" => "#ELEMENT_ID#/",
+		)
+	),
+	false
 );?> 
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
