@@ -18,7 +18,7 @@ IncludeTemplateLangFile(__FILE__);
 <script src="<?=CUtil::GetAdditionalFileURL(SITE_TEMPLATE_PATH.'/myscripts.js')?>"></script>
 
 
-	<!--[if lte IE 6]>
+	<!--[if lte IE ]>
 	<style type="text/css">
 		
 		#banner-overlay { 

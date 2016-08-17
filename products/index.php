@@ -2,7 +2,7 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Продукция");
 ?><?$APPLICATION->IncludeComponent(
-	"picom:catalog",
+	"bitrix:catalog",
 	"",
 	Array(
 		"ACTION_VARIABLE" => "action",
@@ -36,6 +36,10 @@ $APPLICATION->SetTitle("Продукция");
 		"ELEMENT_SORT_FIELD2" => "id",
 		"ELEMENT_SORT_ORDER" => "asc",
 		"ELEMENT_SORT_ORDER2" => "desc",
+		"FILTER_FIELD_CODE" => array("NAME",""),
+		"FILTER_NAME" => "Brand",
+		"FILTER_PRICE_CODE" => array("PRICE"),
+		"FILTER_PROPERTY_CODE" => array("BRAND",""),
 		"IBLOCK_ID" => "2",
 		"IBLOCK_TYPE" => "products",
 		"INCLUDE_SUBSECTIONS" => "Y",

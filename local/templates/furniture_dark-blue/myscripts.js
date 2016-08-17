@@ -14,9 +14,11 @@ $(document).ready(function() {
 	});
     $("#inline_question").fancybox({
 		'hideOnContentClick': false
+		
 	});
     $("#order_inline").fancybox({
 		'hideOnContentClick': false
+
 	});
 	var res=0;
 	 $("formw").submit( function(){

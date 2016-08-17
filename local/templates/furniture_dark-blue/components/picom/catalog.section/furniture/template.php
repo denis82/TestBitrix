@@ -37,24 +37,35 @@ foreach($arResult["ITEMS"] as $cell=>$arElement):
 	
 	
 <?
+	foreach ($arElement["DISPLAY_PROPERTIES"]['BRAND']["LINK_ELEMENT_VALUE"] as $res) {
+		$id_element = ($res['CODE']);
+		
+		if (NULL != $arElement["DISPLAY_PROPERTIES"]['BRAND']) {
+			$id = $arElement['ID'];
+			$newWidth = 50; 
+			$newHeight =50;
+			echo CFile::ShowImage($arResult['ITEMS']['IMG_NAME'][$id], $newWidth, $newHeight, "border=0", "", TRUE);
+			echo '&nbspбренд:&nbsp';
+			$num = $arElement["DISPLAY_PROPERTIES"]['BRAND']['VALUE'];
+			echo '<a href ="'.SITE_DIR.'brands/'.$id_element.'/">'.
+			$arElement["DISPLAY_PROPERTIES"]['BRAND']['LINK_ELEMENT_VALUE'][$num]['NAME'].'</a>';
+		}
+	}
+	
+
 	foreach($arElement["DISPLAY_PROPERTIES"] as $pid=>$arProperty):
 
 	if ($pid != 'PRICECURRENCY'):
-?><?
-	
-	$id_element=$arProperty ["VALUE"];
-	$newWidth = 50; 
-	$newHeight =50;
-	$renderImage = CFile::ResizeImageGet($arProperty ["LINK_ELEMENT_VALUE"][$id_element]["DETAIL_PICTURE"], Array("width" => $newWidth, "height" => $newHeight), BX_RESIZE_IMAGE_EXACT );
-	echo CFile::ShowImage($renderImage['src'], $newWidth, $newHeight, "border=0", "", true);
 ?>
-		<?=$arProperty["NAME"]?>:&nbsp;<?
-			if(is_array($arProperty["DISPLAY_VALUE"]))
-				echo implode("&nbsp;/&nbsp;", $arProperty["DISPLAY_VALUE"]);
-			else		
-				//echo $arProperty["DISPLAY_VALUE"];
-				echo '<a href ="'.SITE_DIR.'brands/'.$id_element.'/">'.$arProperty ["LINK_ELEMENT_VALUE"][$id_element]["NAME"].'</a>';
-				?><br />
+<?php
+	if (is_array($arProperty["DISPLAY_VALUE"])) {
+		echo implode("&nbsp;/&nbsp;", $arProperty["DISPLAY_VALUE"]);
+	} else {		
+		//echo $arProperty["DISPLAY_VALUE"];
+		
+	}	
+?>
+	<br />
 <?
 		endif;
 	endforeach;

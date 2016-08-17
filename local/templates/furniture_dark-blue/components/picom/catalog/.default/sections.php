@@ -3,27 +3,24 @@
  
 <?  
 global $arrFilter;
+if( NULL != $_GET["order"]){
+$order = $_GET["order"];
+} 
 
 
-if (CModule::IncludeModule("iblock")){
- 
-	$iblock_id = 13;
-	# show url my elements
-	$my_elements = CIBlockElement::GetList (
-	  Array("ID" => "ASC"),
-	  Array("IBLOCK_ID" => $iblock_id),
-	  false,
-	  false,
-	  Array('ID',"NAME")
-	);
- 
-	
-}
-
-    if ($_GET["sort"] == "price")
+    if ($_GET["price"] == 1)
     {
     
         $arParams["ELEMENT_SORT_FIELD"] = "PROPERTY_PRICE";
+        $arParams["ELEMENT_SORT_ORDER"] = $order;
+        $price="asortvibor";
+        $brend="";
+    }
+    if ($_GET["price"] == 2)
+    {
+    
+        $arParams["ELEMENT_SORT_FIELD"] = "PROPERTY_PRICE";
+        $arParams["ELEMENT_SORT_ORDER"] = $order;
         $price="asortvibor";
         $brend="";
     }
@@ -31,7 +28,7 @@ if (CModule::IncludeModule("iblock")){
     {
  
         $arParams["ELEMENT_SORT_FIELD"] = "name";
-        $brend="asortvibor";
+        $name="asortvibor";
         $price="";
     }
     if ($_GET["sort"] == "brand")
@@ -41,20 +38,41 @@ if (CModule::IncludeModule("iblock")){
         $brend="asortvibor";
         $price="";
     }
-    echo '<span>Сортировать по: </span>
-        <a href="'.$APPLICATION->GetCurPageParam("sort=price",array("sort"), false).'" class="'.$price.'">цене</a> |
-        <a href="'.$APPLICATION->GetCurPageParam("sort=name",array("sort"), false).'" class="'.$brend.'">названию</a> |<br>';
+    
+    echo '<span>Сортировать по: </span>';
+    if("ASC" == $order || NULL == $order) {
+        echo '<a href="'.$APPLICATION->GetCurPageParam("sort=price",array("sort","order"), false).'&order=DESC" class="'.$price.'">&#9650; цене</a> |';
+
+    }
+    if("DESC" == $order) {
+  
+       echo '<a href="'.$APPLICATION->GetCurPageParam("sort=price",array("sort","order"), false).'&order=ASC" class="'.$price.'">&#9660; цене</a> |';
+    }    
+      echo  '<a href="'.$APPLICATION->GetCurPageParam("sort=name",array("sort"), false).'" class="'.$brend.'">названию</a> |<br>';
     echo 'По бренду: <ul style="display: inline">'; 
+    
+    if (CModule::IncludeModule("iblock")){
+	$iblock_id = 13;
+	# show url my elements
+	$my_elements = CIBlockElement::GetList (
+	  Array("ID" => $order),
+	  Array("IBLOCK_ID" => $iblock_id),
+	  false,
+	  false,
+	  Array('ID',"NAME")
+	);
+ 
+	
+}
      while($ar_fields = $my_elements->GetNext())
 	{
 	echo '<li style="display: inline; margin-right: 10px"><a href="'.SITE_DIR.'products/?sort=brand&ELEMENT='.$ar_fields['ID'].'">'.$ar_fields['NAME'].'</a></li>';
 
 	}
-    
-        
-
         echo '</ul>';
 ?>
+
+
 <?$APPLICATION->IncludeComponent(
 	"picom:catalog.section",
 	"furniture",

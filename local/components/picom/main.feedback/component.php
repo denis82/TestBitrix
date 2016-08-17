@@ -13,6 +13,7 @@ if(!defined("B_PROLOG_INCLUDED")||B_PROLOG_INCLUDED!==true)die();
 
 $arResult["PARAMS_HASH"] = md5(serialize($arParams).$this->GetTemplateName());
 
+ 
 $arParams["USE_CAPTCHA"] = (($arParams["USE_CAPTCHA"] != "N" && !$USER->IsAuthorized()) ? "Y" : "N");
 $arParams["EVENT_NAME"] = trim($arParams["EVENT_NAME"]);
 if($arParams["EVENT_NAME"] == '')
@@ -25,7 +26,7 @@ if($arParams["OK_TEXT"] == '')
 	$arParams["OK_TEXT"] = GetMessage("MF_OK_MESSAGE");
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] <> '' && (!isset($_POST["PARAMS_HASH"]) || $arResult["PARAMS_HASH"] === $_POST["PARAMS_HASH"]))
-{
+{ 
 	$arResult["ERROR_MESSAGE"] = array();
 	if(check_bitrix_sessid())
 	{
@@ -77,35 +78,79 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] <> '' && (!isset($_P
 
 		}			
 		if(empty($arResult["ERROR_MESSAGE"]))
-		{         
-                        if(true == isset($_POST["user_phone"]) and false == isset($_POST["user_email"])) {
-                            
-                            $el = new CIBlockElement;
+		{       
+                    
+                    if ("CALLBACK" == $arParams["MY_FORM_PARAM"]) {   
+                        
+                        CModule::IncludeModule("iblock");
+                        $el = new CIBlockElement;
+                        $PROP['NAME'] = $_POST["user_name"];
+                        $PROP['PHONE'] = $_POST["user_phone"];
+                        $PROP['EMAIL'] = $_POST["user_email"];
+                        $PROP['QUESTION'] = $_POST['MESSAGE'];
+                        $arLoadProductArray = Array(
+                            "MODIFIED_BY"    => $USER->GetID(), // элемент изменен текущим пользователем
+                            "IBLOCK_SECTION_ID" => false,          // элемент лежит в корне раздела
+                            "IBLOCK_ID"      => 27,
+                            "PROPERTY_VALUES"=> $PROP,
+                            "NAME"           => $_POST['MESSAGE'],
+                            "ACTIVE"         => "N",            // неактивен
+                            "PREVIEW_TEXT"   => "текст для списка элементов",
+                            "DETAIL_TEXT"    => "текст для детального просмотра",
+                        );
+                        $el->Add($arLoadProductArray);
 
-                            $PROP = array();
-                            $PROP[40] = $_POST['user_phone'];
-                            $PROP[41] = $_POST['MESSAGE'];  
- 
+                    }  
+                    if ("FEEDBACK" == $arParams["MY_FORM_PARAM"]) {
+                         
+                        CModule::IncludeModule("iblock");
+                        $el = new CIBlockElement;
 
-                            $arLoadProductArray = Array(
+                        $PROP = array();
+                        $PROP['NAME'] = $_POST['user_name'];
+                        $PROP['MESSAGE'] = $_POST['MESSAGE'];  
+
+                        $arLoadProductArray = Array(
+                            "MODIFIED_BY"    => $USER->GetID(), // элемент изменен текущим пользователем
+                            "IBLOCK_SECTION_ID" => false,          // элемент лежит в корне раздела
+                            "IBLOCK_ID"      => 12,
+                            "PROPERTY_VALUES"=> $PROP,
+                            "NAME"           => date("Y-m-d-H"),
+                            "ACTIVE"         => "N",            // неактивен
+                            "PREVIEW_TEXT"   => "текст для списка элементов",
+                            "DETAIL_TEXT"    => "текст для детального просмотра",
+                        );
+                        
+                        $el->Add($arLoadProductArray);
+                                               
+                    }
+                    
+                    if("ORDER" == $arParams["MY_FORM_PARAM"]) {
+                         
+                        CModule::IncludeModule("iblock");
+                        $el = new CIBlockElement;
+
+                        $PROP = array();
+                        $PROP['PHONE'] = $_POST['user_phone'];
+                        $PROP['MESSAGE'] = $_POST['MESSAGE'];  
+
+                        $arLoadProductArray = Array(
                             "MODIFIED_BY"    => $USER->GetID(), // элемент изменен текущим пользователем
                             "IBLOCK_SECTION_ID" => false,          // элемент лежит в корне раздела
                             "IBLOCK_ID"      => 21,
                             "PROPERTY_VALUES"=> $PROP,
                             "NAME"           => date("Y-m-d-H"),
-                            "ACTIVE"         => "Y",            // активен
+                            "ACTIVE"         => "N",            // неактивен
                             "PREVIEW_TEXT"   => "текст для списка элементов",
                             "DETAIL_TEXT"    => "текст для детального просмотра",
-                            //"DETAIL_PICTURE" => CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"]."/image.gif")
-                            );
-                            if($PRODUCT_ID = $el->Add($arLoadProductArray))
-                                echo "New ID: ".$PRODUCT_ID;
-                            else
-                                echo "Error: ".$el->LAST_ERROR;
-                            
-                            
-                        }
+                        );
+                        
+                        $el->Add($arLoadProductArray);
+                                               
+                    }
+
 			$arFields = Array(
+				"PHONE" => $_POST["user_phone"],
 				"AUTHOR" => $_POST["user_name"],
 				"AUTHOR_EMAIL" => $_POST["user_email"],
 				"EMAIL_TO" => $arParams["EMAIL_TO"],
@@ -127,6 +172,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && $_POST["submit"] <> '' && (!isset($_P
 		$arResult["MESSAGE"] = htmlspecialcharsbx($_POST["MESSAGE"]);
 		$arResult["AUTHOR_NAME"] = htmlspecialcharsbx($_POST["user_name"]);
 		$arResult["AUTHOR_EMAIL"] = htmlspecialcharsbx($_POST["user_email"]);
+		$arResult["PHONE"] = htmlspecialcharsbx($_POST["user_phone"]);
 	}
 	else
 		$arResult["ERROR_MESSAGE"][] = GetMessage("MF_SESS_EXP");

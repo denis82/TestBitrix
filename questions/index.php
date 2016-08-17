@@ -2,48 +2,14 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Вопрос-ответ");
 $post = $_POST;
-?><?if($_GET["ELEMENT_ID"] == null):?> <a id="inline_question" href="#data">Задать вопрос</a>
-<?endif?> <?
-$el = new CIBlockElement;
-
-if('' != $_POST['user_name'] && '' != $_POST['MESSAGE']) {
-     
-    $PROP = $_POST;
-
-    $arLoadProductArray = Array(
-    "MODIFIED_BY"    => $USER->GetID(), // элемент изменен текущим пользователем
-    "IBLOCK_SECTION_ID" => false,          // элемент лежит в корне раздела
-    "IBLOCK_ID"      => 12,
-    "PROPERTY_VALUES"=> $PROP,
-    "NAME"           => $_POST['MESSAGE'],
-    "ACTIVE"         => "N",            // активен
-    "PREVIEW_TEXT"   => "текст для списка элементов",
-    "DETAIL_TEXT"    => "текст для детального просмотра",
-    "DETAIL_PICTURE" => CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"]."/image.gif")
-    );
-    if($PRODUCT_ID = $el->Add($arLoadProductArray))
-        echo "New ID: ".$PRODUCT_ID;
-    else
-        echo "Error: ".$el->LAST_ERROR;
-}  
 ?>
-<div style="display:none">
-	<div id="data">
-		 <?$APPLICATION->IncludeComponent(
-	"picom:main.feedback",
-	"feedback",
-	Array(
-		"EMAIL_TO" => "dtelegin.spok@yandex.ru",
-		"EVENT_MESSAGE_ID" => "",
-		"OK_TEXT" => "Спасибо, ваше сообщение принято.",
-		"REQUIRED_FIELDS" => array(0=>"NAME",1=>"MESSAGE",),
-		"USE_CAPTCHA" => "Y"
-	)
-);?>
-	</div>
-</div>
+<?if ($_GET["ELEMENT_ID"] == NULL):?>
+
+	<a id="inline_question" href="<?php echo "/questions/ask_question.php";?>">Задать вопрос</a>
+	
+<?endif?> 
  <?$APPLICATION->IncludeComponent(
-	"picom:news",
+	"bitrix:news",
 	"question_answer",
 	Array(
 		"ADD_ELEMENT_CHAIN" => "N",
@@ -93,7 +59,9 @@ if('' != $_POST['user_name'] && '' != $_POST['MESSAGE']) {
 		"PAGER_TEMPLATE" => ".default",
 		"PAGER_TITLE" => "Новости",
 		"PREVIEW_TRUNCATE_LEN" => "",
-		"SEF_MODE" => "N",
+		"SEF_FOLDER" => "/questions/",
+		"SEF_MODE" => "Y",
+		"SEF_URL_TEMPLATES" => Array("detail"=>"#ELEMENT_ID#/","news"=>"","section"=>""),
 		"SET_LAST_MODIFIED" => "N",
 		"SET_STATUS_404" => "N",
 		"SET_TITLE" => "Y",
@@ -108,45 +76,7 @@ if('' != $_POST['user_name'] && '' != $_POST['MESSAGE']) {
 		"USE_RATING" => "N",
 		"USE_RSS" => "N",
 		"USE_SEARCH" => "N",
-		"USE_SHARE" => "N",
-		"VARIABLE_ALIASES" => Array("ELEMENT_ID"=>"ELEMENT_ID","SECTION_ID"=>"SECTION_ID")
+		"USE_SHARE" => "N"
 	)
-);?> <?if($_GET["ELEMENT_ID"] != null):?> <a id="inline_resp" href="#data_resp">Ответить на вопрос</a>
-<?endif?>
-<div style="display:none">
-	<div id="data_resp">
-		 <?$APPLICATION->IncludeComponent(
-	"bitrix:main.feedback",
-	"feedback_resp",
-	Array(
-		"EMAIL_TO" => "dtelegin.spok@yandex.ru",
-		"EVENT_MESSAGE_ID" => "",
-		"OK_TEXT" => "Спасибо, ваше сообщение принято.",
-		"REQUIRED_FIELDS" => array(0=>"NAME",1=>"MESSAGE",2=>"EMAIL",3=>"PHONE",),
-		"USE_CAPTCHA" => "N"
-	)
-);?>
-	</div>
-</div>
-<?
-$ell = new CIBlockElement;
-
-if('' != $_POST['response']) {
-     
-    $PROP = $_POST;
-
-    $arLoadProductArray = Array(
-    "MODIFIED_BY"    => $USER->GetID(), // элемент изменен текущим пользователем
-    "IBLOCK_SECTION" => false,          // элемент лежит в корне раздела
-    "PROPERTY_VALUES"=> $PROP,
-    //"NAME"           => "Элемент",
-    "ACTIVE"         => "Y",            // активен
-    //"PREVIEW_TEXT"   => "текст для списка элементов",
-   // "DETAIL_TEXT"    => "текст для детального просмотра",
-   // "DETAIL_PICTURE" => CFile::MakeFileArray($_SERVER["DOCUMENT_ROOT"]."/image.gif")
-    );
-
-    $PRODUCT_ID = (int)$_GET["ELEMENT_ID"];  
-    $res = $ell->Update($PRODUCT_ID, $arLoadProductArray);
-}  
-?><?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>
+);?> 
+<?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

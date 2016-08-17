@@ -146,32 +146,30 @@ $APPLICATION->IncludeComponent("bitrix:search.form", "flat", Array(
 				</div>
                                 <div class="content-block">
                                     <div class="content-block-inner">
-					<a   id="inline" href="#form_sm">Заказать звонок</a>
-                                        <div style="display: none">
-                                            <div id="form_sm">					
-<?
-$APPLICATION->IncludeComponent(
-	"picom:main.feedback",
-	"callback",
+										<a   id="inline" href="<?=SITE_DIR?>order_call.php">Заказать звонок</a>
+                                    </div>
+                                </div>
+								<div style="display: none">
+											<div id="form_or">	
+
+<?$APPLICATION->IncludeComponent(
+	"order:main.feedback",
+	"orders",
 	Array(
-		"AJAX_MODE" => "Y",
+        "AJAX_MODE" => "Y",
 		"AJAX_OPTION_SHADOW" => "N",
 		"AJAX_OPTION_JUMP" => "N",
 		"AJAX_OPTION_STYLE" => "Y",
 		"AJAX_OPTION_HISTORY" => "N",
-		"EMAIL_TO" => "xtcnth7@yandex.ru",
+		"EMAIL_TO" => "dtelegin.spok@yandex.ru",
 		"EVENT_MESSAGE_ID" => array(),
 		"OK_TEXT" => "Спасибо, ваше сообщение принято.",
-		"REQUIRED_FIELDS" => array("NAME","EMAIL","PHONE","MESSAGE"),
+		"REQUIRED_FIELDS" => array("PHONE","MESSAGE"),
 		"USE_CAPTCHA" => "N"
 	)
-);
-?>
-                                            </div>
-                                        </div>     
-                                    </div>
-                                </div>
-				
+);?>
+								</div>
+							</div>  				
 				<div class="information-block">
 					<div class="top"></div>
 					<div class="information-block-inner">
@@ -189,4 +187,11 @@ $APPLICATION->IncludeFile(
 			</div>
 		
 			<div id="workarea">
+			 <?$APPLICATION->IncludeComponent("picom:breadcrumb", "breadcrumbs", Array(
+	"PATH" => "",	// Путь, для которого будет построена навигационная цепочка (по умолчанию, текущий путь)
+		"SITE_ID" => "s1",	// Cайт (устанавливается в случае многосайтовой версии, когда DOCUMENT_ROOT у сайтов разный)
+		"START_FROM" => "0",	// Номер пункта, начиная с которого будет построена навигационная цепочка
+	),
+	false
+);?>
 				<h1 id="pagetitle"><?$APPLICATION->ShowTitle(false);?></h1>

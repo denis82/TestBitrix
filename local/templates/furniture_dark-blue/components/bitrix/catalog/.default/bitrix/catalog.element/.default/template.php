@@ -119,3 +119,6 @@ endif;
 ?>
 	</div>
 </div>
+
+        <a id="order_inline" href="<?=SITE_DIR?>products/order.php">Онлайн-заказ</a>
+        

@@ -45,7 +45,7 @@ $aMenuLinks = Array(
 	),
 	Array(
 		"Вопрос", 
-		"/novyy-razdel/", 
+		"/questions/", 
 		Array(), 
 		Array(), 
 		"" 
